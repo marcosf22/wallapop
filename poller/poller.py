@@ -7,36 +7,15 @@ import os
 # --- CONFIGURACIÓN ---
 CATEGORY_ID = "9562" # Relojes
 REFERENCE_PRICES = {
-    "Rolex": 4000, "Omega": 2500, "Breitling": 2200, "Hublot": 4500,
-    "Patek Philippe": 15000, "Audemars Piguet": 12000, "Vacheron Constantin": 8000,
-    "Jaeger-LeCoultre": 4000, "IWC": 3000, "Panerai": 3500, "Cartier": 2500,
-    "Tudor": 2000, "Zenith": 3000, "Tag Heuer": 1000, "Longines": 800,
-    
-    # Modelos Específicos (para detección cruzada)
-    "Submariner": 7000, "Daytona": 12000, "Speedmaster": 3000, "Seamaster": 2500,
-    "Nautilus": 20000, "Royal Oak": 15000, "Tank": 1500, "Santos": 3000,
-    "Black Bay": 2200, "Carrera": 1500, "Monaco": 3000,
-    
-    # Gama Media / Entrada (para volumen)
-    "Seiko": 200, "Tissot": 250, "Hamilton": 400, "Citizen": 150
+    "Rolex": 4000, "Omega": 2000, "Tag Heuer": 1000, 
+    "Breitling": 2500, "Hublot": 5000, "Seiko": 200, "Tissot": 300
 }
 TARGET_KEYWORDS = list(REFERENCE_PRICES.keys())
 POLL_INTERVAL_MINUTES = 20
 
 SUSPICIOUS_KEYWORDS = [
-    # Falsificaciones
     "réplica", "replica", "clon", "imitación", "imitacion", "1:1", "AAA", 
-    "repro", "copia", "falso", "fake", "tipo rolex", "estilo rolex", "superclon",
-    
-    # Estado / Origen dudoso
-    "sin papeles", "sin documentación", "perdida", "perdido", "herencia", "regalo", 
-    "urge", "urgente", "sin caja", "bloqueado", "encontrado", 
-    
-    # Modus Operandi Estafa
-    "solo whatsapp", "contactar por", "6*", "7*", # Intentos de sacar del chat
-    "bizum", "transferencia", "envío gratis", "pago por adelantado", 
-    "inglés", "doy correo", "escribeme a", "no funciona wallapay",
-    "abstenerse curiosos"
+    "sin papeles", "urge", "urgente", "sin caja", "bloqueado", "robado"
 ]
 
 HEADERS = {"Host": "api.wallapop.com", "X-DeviceOS": "0"}
