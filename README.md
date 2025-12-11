@@ -36,8 +36,9 @@
   <img src="./elastalert/screenshots/alert_example.png" alt="Ejemplo de Alerta Disparada" width="500"/>
 </p>
 
-* **report/report.pdf** Informe final con el análisis de los patrones de fraude encontrados en la categoría seleccionada y la validación del sistema.
+* **report/Report.pdf** Informe con el proceso de desarrollo de los scripts, el reparto de tareas y el proceso de desarrollo con la IA.
 
+* **poller/viewer.py** EXTRA: Interfaz web que sirve para ver en claro de forma visual el contenido capturado por el poller.py y almacenado en el JSON.
 ---
 
 ## 🚀 Instalación y uso:
@@ -47,3 +48,4 @@
 3. **Ejecutar Ingesta:** Correr el script de ingestión o iniciar el agente Elastic/Filebeat.
 4. **Importar Dashboards:** Cargar el archivo ndjson en Kibana.
 5. **Activar Alertas:** Ejecutar Elastalert2 apuntando a las reglas definidas.
+6. **EXTRA: Interfaz:** Para ejecutar la interfaz hay que poner por consola "streamlit run viewer.py".
