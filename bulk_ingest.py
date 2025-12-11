@@ -9,21 +9,18 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # --- CONFIGURACIÓN ---
 ES_URL = "https://localhost:9200"
-INDEX_ALIAS = "lab1.wallapop"  # <--- Asegúrate de que coincida con lo que pusiste en Kibana
-AUTH = ('elastic', 'mlJZP3AuDE0pr4q1Rwq8') # <--- CAMBIA ESTO si tu contraseña es distinta
+INDEX_ALIAS = "lab2.wallapop"
+AUTH = ('elastic', 'mlJZP3AuDE0pr4q1Rwq8')
 
 def get_filename():
-    # Busca el archivo con fecha de HOY
     today_str = datetime.now().strftime("%Y%m%d")
     return f"logs/wallapop_watches_{today_str}.json"
 
 def ingest():
     json_file = get_filename()
     
-    # Comprobación de seguridad
     if not os.path.exists(json_file):
         print(f"[ERROR] No encuentro el archivo de hoy: {json_file}")
-        print("¿Está corriendo el poller? ¿Ha pasado suficiente tiempo?")
         return
 
     print(f"[*] Leyendo archivo: {json_file}...")
@@ -31,31 +28,40 @@ def ingest():
     bulk_data = []
     count = 0
     
-    # Leer el fichero línea a línea
     with open(json_file, "r", encoding="utf-8") as f:
         for line in f:
             line = line.strip()
             if not line: continue
             
-            # 1. Cabecera de acción para Elastic
-            action = {"index": {"_index": INDEX_ALIAS}}
-            bulk_data.append(json.dumps(action))
-            
-            # 2. El dato en sí
-            bulk_data.append(line)
-            count += 1
+            try:
+                # 1. Parseamos la línea para extraer el ID original del anuncio
+                doc = json.loads(line)
+                item_id = doc.get("id")
+                
+                # 2. Especificamos el "_id" en la cabecera de acción
+                # Si el ID ya existe, 'index' lo sobrescribe (actualiza).
+                action = {
+                    "index": {
+                        "_index": INDEX_ALIAS,
+                        "_id": item_id  # <--- ESTO EVITA LOS DUPLICADOS
+                    }
+                }
+                
+                bulk_data.append(json.dumps(action))
+                bulk_data.append(line)
+                count += 1
+            except Exception as e:
+                print(f"[WARN] Error procesando línea: {e}")
 
     if count == 0:
-        print("[INFO] El archivo está vacío (aún no hay anuncios nuevos).")
+        print("[INFO] El archivo está vacío.")
         return
 
-    # Preparar el paquete para enviar (NDJSON requiere saltos de línea)
     bulk_payload = "\n".join(bulk_data) + "\n"
 
     print(f"[*] Enviando {count} documentos a Elastic...")
     
     try:
-        # Enviar a Elastic usando HTTPS e ignorando el certificado SSL local
         response = requests.post(
             f"{ES_URL}/_bulk",
             data=bulk_payload.encode('utf-8'),
@@ -67,10 +73,10 @@ def ingest():
         if response.status_code == 200:
             resp = response.json()
             if resp.get("errors"):
-                print("[!] Elastic aceptó el paquete pero hubo errores individuales.")
+                print("[!] Elastic aceptó el paquete pero hubo errores.")
                 print(f"Detalle primer error: {resp['items'][0]}")
             else:
-                print("[OK] Ingesta completada con éxito.")
+                print("[OK] Ingesta completada (idempotente).")
         else:
             print(f"[ERROR] Fallo en el servidor: {response.status_code} - {response.text}")
             
