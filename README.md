@@ -43,9 +43,9 @@
 
 ## 🚀 Instalación y uso:
 
-1. **Configurar el Poller:** Instalar dependencias, en caso de no tenerlas y ajustar `config.json` con la categoría deseada.
+1. **Configurar el Poller:** Instalar dependencias, en caso de no tenerlas y ajustar la busqueda de la categoría deseada.
 2. **Desplegar Elastic Stack:** Asegurar que Elasticsearch y Kibana están corriendo (v8.x).
-3. **Ejecutar Ingesta:** Correr el script de ingestión o iniciar el agente Elastic/Filebeat.
+3. **Ejecutar Ingesta:** Correr el script de ingestión o iniciar el agente Elastic/.
 4. **Importar Dashboards:** Cargar el archivo ndjson en Kibana.
 5. **Activar Alertas:** Ejecutar Elastalert2 apuntando a las reglas definidas.
 6. **EXTRA: Interfaz:** Para ejecutar la interfaz hay que poner por consola "streamlit run viewer.py".
