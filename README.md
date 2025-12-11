@@ -22,15 +22,9 @@
 
 * **poller/poller.py** Este script es el núcleo de la recolección. Se encarga de consultar la API, filtrar por "items del día", aplicar la lógica de sospecha y generar los ficheros JSON diarios.
 
-* **ingestion/bulk_ingest.py** (O configuración de Filebeat/Fleet) Encargado de leer los logs diarios y enviarlos al clúster de Elasticsearch aplicando los *templates* definidos.
+* **ingestion/bulk_ingest.py** Encargado de leer los logs diarios y enviarlos al clúster de Elasticsearch aplicando los *templates* definidos.
 
-* **kibana/dashboard_export.ndjson** Archivo de exportación que contiene todos los "Saved Objects" necesarios para replicar las visualizaciones y el Dashboard del Radar de Fraude.
-
-<p align="center">
-  <img src="./kibana/screenshots/dashboard_preview.png" alt="Captura del Dashboard de Kibana" width="600"/>
-</p>
-
-* **elastalert/rules/*.yaml** Definiciones de las reglas de alerta. Aquí se establecen los criterios de disparo (ej. precio < 50% de la media o score > 80) y el método de notificación.
+* **elastalert/rules/*.yaml** Definiciones de las reglas de alerta. Aquí se establecen los criterios de disparo, para la generación de alertas y el método de notificación.
 
 <p align="center">
   <img src="./elastalert/screenshots/alert_example.png" alt="Ejemplo de Alerta Disparada" width="500"/>
