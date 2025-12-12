@@ -26,10 +26,6 @@
 
 * **elastalert/rules/*.yaml** Definiciones de las reglas de alerta. Aquí se establecen los criterios de disparo, para la generación de alertas y el método de notificación.
 
-<p align="center">
-  <img src="./elastalert/screenshots/alert_example.png" alt="Ejemplo de Alerta Disparada" width="500"/>
-</p>
-
 * **report/Report.pdf** Informe con el proceso de desarrollo de los scripts, el reparto de tareas y el proceso de desarrollo con la IA.
 
 * **poller/viewer.py** EXTRA: Interfaz web que sirve para ver en claro de forma visual el contenido capturado por el poller.py y almacenado en el JSON.
