@@ -1,0 +1,16 @@
+name: "Wallapop: Low Price Alert"
+type: any
+index: "lab1.wallapop"
+
+timestamp_field: "created_at"
+
+timeframe:
+  days: 7
+
+filter:
+  - range:
+      price.amount:
+        lt: 100
+
+alert:
+  - "debug"

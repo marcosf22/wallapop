@@ -1,0 +1,14 @@
+name: "Wallapop: High Risk Score Alert"
+type: any
+index: "lab1.wallapop"
+
+timestamp_field: "created_at"
+
+filter:
+  - range:
+      enrichment.risk_score:
+        gte: 60
+
+alert:
+  - "debug"
+
